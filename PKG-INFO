@@ -1,0 +1,13 @@
+Metadata-Version: 1.0
+Name: astral
+Version: 0.5
+Summary: Calculations for the position of the sun and moon.
+Home-page: http://www.sffjunkie.co.uk/python-astral.html
+Author: Simon Kennedy
+Author-email: python@sffjunkie.co.uk
+License: Apache-2.0
+Description: Sun calculations for dawn, sunrise, solar noon,
+            sunset, dusk, solar elevation, solar azimuth and rahukaalam.
+            Moon calculation for phase.
+            
+Platform: UNKNOWN

@@ -1,0 +1,705 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The astral Module &mdash; Astral v0.4 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Astral v0.4 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to Astral V0.5" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Astral V0.5"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Astral v0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-astral">
+<span id="the-astral-module"></span><h1>The <a class="reference internal" href="#module-astral" title="astral"><tt class="xref py py-mod docutils literal"><span class="pre">astral</span></tt></a> Module<a class="headerlink" href="#module-astral" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-astral" title="astral"><tt class="xref py py-mod docutils literal"><span class="pre">astral</span></tt></a> module provides the means to calculate dawn, sunrise,
+solar noon, sunset, dusk and rahukaalam times, plus solar azimuth and elevation,
+for specific cities or at a specific latitude/longitude. It can also calculate
+the moon phase for a specific date.</p>
+<p>The module provides 2 main classes <a class="reference internal" href="#astral.Astral" title="astral.Astral"><tt class="xref py py-class docutils literal"><span class="pre">Astral</span></tt></a> and <a class="reference internal" href="#astral.City" title="astral.City"><tt class="xref py py-class docutils literal"><span class="pre">City</span></tt></a>.</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="#astral.Astral" title="astral.Astral"><tt class="xref py py-class docutils literal"><span class="pre">Astral</span></tt></a></dt>
+<dd><p class="first">Has 2 main responsibilities</p>
+<ul class="last simple">
+<li>Calculates the events in the UTC timezone.</li>
+<li>Holds a dictionary of City classes</li>
+</ul>
+</dd>
+<dt><a class="reference internal" href="#astral.City" title="astral.City"><tt class="xref py py-class docutils literal"><span class="pre">City</span></tt></a></dt>
+<dd>Holds information about a city and provides functions to calculate
+the event times for the city in the correct time zone.</dd>
+</dl>
+<p>For example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">astral</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Astral</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">city</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="s">&#39;London&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Information for </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">city</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="go">Information for London</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">timezone</span> <span class="o">=</span> <span class="n">city</span><span class="o">.</span><span class="n">timezone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Timezone: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">timezone</span><span class="p">)</span>
+<span class="go">Timezone: Europe/London</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Latitude: </span><span class="si">%.02f</span><span class="s">; Longitude: </span><span class="si">%.02f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">city</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">city</span><span class="o">.</span><span class="n">longitude</span><span class="p">))</span>
+<span class="go">Latitude: 51.60; Longitude: 0.05</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sun</span> <span class="o">=</span> <span class="n">city</span><span class="o">.</span><span class="n">sun</span><span class="p">(</span><span class="n">local</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Dawn:    </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">sun</span><span class="p">[</span><span class="s">&#39;dawn&#39;</span><span class="p">]))</span>
+<span class="go">Dawn:    2009-04-22 05:12:56+01:00</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="astral.Astral">
+<em class="property">class </em><tt class="descclassname">astral.</tt><tt class="descname">Astral</tt><a class="headerlink" href="#astral.Astral" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="astral.Astral.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#astral.Astral.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the City instance specified by <tt class="docutils literal"><span class="pre">key</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="astral.Astral.citydb">
+<tt class="descname">citydb</tt><a class="headerlink" href="#astral.Astral.citydb" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">The database of cities.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.dawn_utc">
+<tt class="descname">dawn_utc</tt><big>(</big><em>date</em>, <em>latitude</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.dawn_utc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate dawn time in the UTC timezone.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> (<em>datetime.date</em>) &#8211; Date to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">date/time in UTC timezone</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.dusk_utc">
+<tt class="descname">dusk_utc</tt><big>(</big><em>date</em>, <em>latitude</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.dusk_utc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate dusk time in the UTC timezone.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> (<em>datetime.date</em>) &#8211; Date to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">date/time in UTC timezone</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.moon_phase">
+<tt class="descname">moon_phase</tt><big>(</big><em>date</em><big>)</big><a class="headerlink" href="#astral.Astral.moon_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the phase of the moon on the specified date.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>date</strong> (<em>datetime.date</em>) &#8211; The date to calculate the phase for.</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">Integer designating phase<blockquote>
+<div><div class="line-block">
+<div class="line">0  = New moon</div>
+<div class="line">7  = First quarter</div>
+<div class="line">14 = Full moon</div>
+<div class="line">21 = Last quarter</div>
+</div>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.rahukaalam_utc">
+<tt class="descname">rahukaalam_utc</tt><big>(</big><em>date</em>, <em>latitude</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.rahukaalam_utc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate ruhakaalam times in the UTC timezone.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> (<em>datetime.date</em>) &#8211; Date to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Dictionary with keys <tt class="docutils literal"><span class="pre">start</span></tt> and <tt class="docutils literal"><span class="pre">end</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.solar_azimuth">
+<tt class="descname">solar_azimuth</tt><big>(</big><em>dateandtime</em>, <em>latitude</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.solar_azimuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the azimuth of the sun in the UTC timezone.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dateandtime</strong> (<em>datetime.datetime</em>) &#8211; Date/time to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Azimuth in degrees</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="astral.Astral.solar_depression">
+<tt class="descname">solar_depression</tt><a class="headerlink" href="#astral.Astral.solar_depression" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of degrees the sun must be below the horizon for the dawn/dusk calc.</p>
+<p>Can either be set as a number of degrees below the horizon or as
+one of the following strings</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="65%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">String</th>
+<th class="head">Degrees</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>civil</td>
+<td>6.0</td>
+</tr>
+<tr><td>nautical</td>
+<td>12.0</td>
+</tr>
+<tr><td>astronomical</td>
+<td>18.0</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.solar_elevation">
+<tt class="descname">solar_elevation</tt><big>(</big><em>dateandtime</em>, <em>latitude</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.solar_elevation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the elevation of the sun.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dateandtime</strong> (<em>datetime.datetime</em>) &#8211; Date/time to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Elevation in degrees</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.solar_noon_utc">
+<tt class="descname">solar_noon_utc</tt><big>(</big><em>date</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.solar_noon_utc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate solar noon time in the UTC timezone.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> (<em>datetime.date</em>) &#8211; Date to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">date/time in UTC timezone</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.sun_utc">
+<tt class="descname">sun_utc</tt><big>(</big><em>date</em>, <em>latitude</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.sun_utc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate all the info for the sun at once.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> (<tt class="xref py py-class docutils literal"><span class="pre">datetime.date</span></tt>) &#8211; Date to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Dictionary with keys <tt class="docutils literal"><span class="pre">dawn</span></tt>, <tt class="docutils literal"><span class="pre">sunrise</span></tt>, <tt class="docutils literal"><span class="pre">noon</span></tt>,
+<tt class="docutils literal"><span class="pre">sunset</span></tt> and <tt class="docutils literal"><span class="pre">dusk</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.sunrise_utc">
+<tt class="descname">sunrise_utc</tt><big>(</big><em>date</em>, <em>latitude</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.sunrise_utc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate sunrise time in the UTC timezone.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> (<em>datetime.date</em>) &#8211; Date to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">date/time in UTC timezone</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.Astral.sunset_utc">
+<tt class="descname">sunset_utc</tt><big>(</big><em>date</em>, <em>latitude</em>, <em>longitude</em><big>)</big><a class="headerlink" href="#astral.Astral.sunset_utc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate sunset time in the UTC timezone.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> (<em>datetime.date</em>) &#8211; Date to calculate for.</li>
+<li><strong>latitude</strong> (<em>float</em>) &#8211; Latitude - Southern latitudes should be negative</li>
+<li><strong>longitude</strong> (<em>float</em>) &#8211; Longitude as a floating point number. Eastern latitudes should be negative</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">date/time in UTC timezone</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="astral.City">
+<em class="property">class </em><tt class="descclassname">astral.</tt><tt class="descname">City</tt><big>(</big><em>info=None</em><big>)</big><a class="headerlink" href="#astral.City" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides access to information for single city.</p>
+<dl class="method">
+<dt id="astral.City.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>info=None</em><big>)</big><a class="headerlink" href="#astral.City.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the object with a tuple of information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> &#8211; <p>A tuple of information to fill in the city info.</p>
+<p>The tuple should contain items in the following order</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="55%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Field</th>
+<th class="head">Default</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name</td>
+<td>Greenwich</td>
+</tr>
+<tr><td>country</td>
+<td>England</td>
+</tr>
+<tr><td>latitude</td>
+<td>51.168</td>
+</tr>
+<tr><td>longitude</td>
+<td>0</td>
+</tr>
+<tr><td>time zone name</td>
+<td>Europe/London</td>
+</tr>
+</tbody>
+</table>
+<p>See <a class="reference internal" href="#astral.City.timezone" title="astral.City.timezone"><tt class="xref py py-attr docutils literal"><span class="pre">timezone</span></tt></a> property for a method of obtaining time zone names</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.dawn">
+<tt class="descname">dawn</tt><big>(</big><em>date=None</em>, <em>local=True</em><big>)</big><a class="headerlink" href="#astral.City.dawn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the time in the morning when the sun is a certain number of
+degrees below the horizon. By default this is 6 degrees but can be changed
+by setting the <a class="reference internal" href="#astral.Astral.solar_depression" title="astral.Astral.solar_depression"><tt class="xref py py-attr docutils literal"><span class="pre">Astral.solar_depression</span></tt></a> property.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> &#8211; The date for which to calculate the dawn time.
+A value of None uses the current date.</li>
+<li><strong>local</strong> &#8211; True  = Time to be returned in cities time zone (Default);
+False = Time to be returned in UTC.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt> of dawn</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.dusk">
+<tt class="descname">dusk</tt><big>(</big><em>date=None</em>, <em>local=True</em><big>)</big><a class="headerlink" href="#astral.City.dusk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the dusk time (the time in the evening when the sun is a certain number of
+degrees below the horizon. By default this is 6 degrees but can be changed
+by setting the <a class="reference internal" href="#astral.Astral.solar_depression" title="astral.Astral.solar_depression"><tt class="xref py py-attr docutils literal"><span class="pre">Astral.solar_depression</span></tt></a> property.)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> &#8211; The date for which to calculate the dusk time.
+A value of None uses the current date.</li>
+<li><strong>local</strong> &#8211; True  = Time to be returned in cities time zone (Default);
+False = Time to be returned in UTC.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt> of dusk</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="astral.City.latitude">
+<tt class="descname">latitude</tt><a class="headerlink" href="#astral.City.latitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>The city&#8217;s latitude</p>
+<p><tt class="docutils literal"><span class="pre">latitude</span></tt> can be set either as a string or as a number</p>
+<p>For strings they must be of the form:</p>
+<div class="highlight-python"><pre>degrees°minutes'[N|S] e.g. 51°31'N</pre>
+</div>
+<p>For numbers, negative numbers signify latitudes to the South.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="astral.City.longitude">
+<tt class="descname">longitude</tt><a class="headerlink" href="#astral.City.longitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>The city&#8217;s longitude.</p>
+<p><tt class="docutils literal"><span class="pre">longitude</span></tt> can be set either as a string or as a number</p>
+<p>For strings they must be of the form:</p>
+<div class="highlight-python"><pre>degrees°minutes'[E|W] e.g. 51°31'W</pre>
+</div>
+<p>For numbers, negative numbers signify longitudes to the East.
+This is opposite to the normal convention of +ve being to the West
+but is required for the calculations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.rahukaalam">
+<tt class="descname">rahukaalam</tt><big>(</big><em>date=None</em>, <em>local=True</em><big>)</big><a class="headerlink" href="#astral.City.rahukaalam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the period of rahukaalam.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> &#8211; The date for which to calculate the rahukaalam period.
+A value of None uses the current date.</li>
+<li><strong>local</strong> &#8211; True  = Time to be returned in cities time zone (Default);
+False = Time to be returned in UTC.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt> of dusk</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.solar_azimuth">
+<tt class="descname">solar_azimuth</tt><big>(</big><em>dateandtime=None</em><big>)</big><a class="headerlink" href="#astral.City.solar_azimuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the solar azimuth angle for a specific date/time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dateandtime</strong> (<tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt>) &#8211; The date and time for which to calculate the angle.</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">The angle in degrees clockwise from North as a float.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.solar_elevation">
+<tt class="descname">solar_elevation</tt><big>(</big><em>dateandtime=None</em><big>)</big><a class="headerlink" href="#astral.City.solar_elevation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the solar elevation angle for a specific time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dateandtime</strong> (<tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt>) &#8211; The date and time for which to calculate the angle.</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body">The angle in degrees from the horizon as a float.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.solar_noon">
+<tt class="descname">solar_noon</tt><big>(</big><em>date=None</em>, <em>local=True</em><big>)</big><a class="headerlink" href="#astral.City.solar_noon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the solar noon (the time when the sun is at its highest point.)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> &#8211; The date for which to calculate the noon time.
+A value of None uses the current date.</li>
+<li><strong>local</strong> &#8211; True  = Time to be returned in cities time zone (Default);
+False = Time to be returned in UTC.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt> of noon</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.sun">
+<tt class="descname">sun</tt><big>(</big><em>date=None</em>, <em>local=True</em><big>)</big><a class="headerlink" href="#astral.City.sun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dawn, sunrise, noon, sunset and dusk as a dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> &#8211; The date for which to calculate the times.
+A value of None uses the current date.</li>
+<li><strong>local</strong> &#8211; True  = Time to be returned in cities time zone (Default);
+False = Time to be returned in UTC.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt> of dusk</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.sunrise">
+<tt class="descname">sunrise</tt><big>(</big><em>date=None</em>, <em>local=True</em><big>)</big><a class="headerlink" href="#astral.City.sunrise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sunrise time.</p>
+<p>Calculates the time in the morning when the sun is a 0.833 degrees
+below the horizon. This is to account for refraction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> &#8211; The date for which to calculate the sunrise time.
+A value of None uses the current date.</li>
+<li><strong>local</strong> &#8211; True  = Time to be returned in cities time zone (Default);
+False = Time to be returned in UTC.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt> of sunrise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="astral.City.sunset">
+<tt class="descname">sunset</tt><big>(</big><em>date=None</em>, <em>local=True</em><big>)</big><a class="headerlink" href="#astral.City.sunset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates sunset time (the time in the evening when the sun is a 0.833 degrees
+below the horizon. This is to account for refraction.)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date</strong> &#8211; The date for which to calculate the sunset time.
+A value of None uses the current date.</li>
+<li><strong>local</strong> &#8211; True  = Time to be returned in cities time zone (Default);
+False = Time to be returned in UTC.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt> of sunset</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="astral.City.timezone">
+<tt class="descname">timezone</tt><a class="headerlink" href="#astral.City.timezone" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the time zone in which the city is located.</p>
+<p>A list of time zone names can be obtained from pytz. For example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytz</span> <span class="kn">import</span> <span class="n">all_timezones</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tz</span> <span class="ow">in</span> <span class="n">all_timezones</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">tz</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="astral.City.tz">
+<tt class="descname">tz</tt><a class="headerlink" href="#astral.City.tz" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timezone.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/earth_sun.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Astral V0.5</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/module.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Astral V0.5"
+             >previous</a> |</li>
+        <li><a href="index.html">Astral v0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, Simon Kennedy.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

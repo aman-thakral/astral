@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Astral V0.5 &mdash; Astral v0.4 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Astral v0.4 documentation" href="#" />
+    <link rel="next" title="The astral Module" href="module.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="module.html" title="The astral Module"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Astral v0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-astral-v0-5">
+<h1>Welcome to Astral V0.5<a class="headerlink" href="#welcome-to-astral-v0-5" title="Permalink to this headline">¶</a></h1>
+<p>Astral is a python module for calculating the times of various aspects of
+the sun and moon.</p>
+<p>It calculates the following</p>
+<dl class="docutils">
+<dt>Dawn</dt>
+<dd>The time in the morning when the sun is a specific number of degrees
+below the horizon.</dd>
+<dt>Sunrise</dt>
+<dd>The time in the morning when the top of the sun breaks the horizon
+(asuming a location with no obscuring features.)</dd>
+<dt>Solar Noon</dt>
+<dd>The time when the sun is at its highest point.</dd>
+<dt>Sunset</dt>
+<dd>The time in the evening when the sun is about to disappear below the horizon
+(asuming a location with no obscuring features.)</dd>
+<dt>Dusk</dt>
+<dd>The time in the evening when the sun is a specific number of degrees
+below the horizon.</dd>
+<dt>Solar Azimuth</dt>
+<dd>The number of degrees clockwise from North at which the sun can be seen</dd>
+<dt>Solar Elevation</dt>
+<dd>The number of degrees up from the horizon at which the sun can be seen</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Rahukaalam">Rahukaalam</a></dt>
+<dd>&#8220;Rahukaalam or the period of Rahu is a certain amount of time every day
+that is considered inauspicious for any new venture according to Indian
+astrology&#8221;.</dd>
+<dt>Moon Phase</dt>
+<dd>Calculates the phase of the moon for a specified date.</dd>
+</dl>
+</div>
+<div class="section" id="example">
+<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
+<p>The following example demonstrates the functionality available in the module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">astral</span> <span class="kn">import</span> <span class="n">Astral</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">city_name</span> <span class="o">=</span> <span class="s">&#39;London&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Astral</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">solar_depression</span> <span class="o">=</span> <span class="s">&#39;civil&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">city</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">city_name</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Information for </span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">city_name</span><span class="p">,</span> <span class="n">city</span><span class="o">.</span><span class="n">country</span><span class="p">))</span>
+<span class="go">Information for London/England</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">timezone</span> <span class="o">=</span> <span class="n">city</span><span class="o">.</span><span class="n">timezone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Timezone: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">timezone</span><span class="p">)</span>
+<span class="go">Timezone: Europe/London</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Latitude: </span><span class="si">%.02f</span><span class="s">; Longitude: </span><span class="si">%.02f</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> \
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">(</span><span class="n">city</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">city</span><span class="o">.</span><span class="n">longitude</span><span class="p">))</span>
+<span class="go">Latitude: 51.60; Longitude: 0.08</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sun</span> <span class="o">=</span> <span class="n">city</span><span class="o">.</span><span class="n">sun</span><span class="p">(</span><span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2009</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">22</span><span class="p">),</span> <span class="n">local</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Dawn:    </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">sun</span><span class="p">[</span><span class="s">&#39;dawn&#39;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Sunrise: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">sun</span><span class="p">[</span><span class="s">&#39;sunrise&#39;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Noon:    </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">sun</span><span class="p">[</span><span class="s">&#39;noon&#39;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Sunset:  </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">sun</span><span class="p">[</span><span class="s">&#39;sunset&#39;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;Dusk:    </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">sun</span><span class="p">[</span><span class="s">&#39;dusk&#39;</span><span class="p">]))</span>
+<span class="go">Dawn:     2009-04-22 05:12:56+01:00</span>
+<span class="go">Sunrise:  2009-04-22 05:49:36+01:00</span>
+<span class="go">Noon:     2009-04-22 12:58:48+01:00</span>
+<span class="go">Sunset:   2009-04-22 20:09:07+01:00</span>
+<span class="go">Dusk:     2009-04-22 20:45:52+01:00</span>
+</pre></div>
+</div>
+<p>Access to the database of cities can be made through the Astral class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Astral</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">citydb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">london</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s">&#39;London&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Timezone groups such as Europe can be accessed via attributes on the database:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Astral</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">citydb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">europe</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">cities</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">europe</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">europe</span>
+<span class="go">[&#39;Aberdeen&#39;, &#39;Amsterdam&#39;, &#39;Andorra la Vella&#39;, &#39;Ankara&#39;, &#39;Athens&#39;, ...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>This module is licensed under the terms of the <a class="reference external" href="http://www.opensource.org/licenses/apache2.0.php">Apache</a> V2.0 license.</p>
+</div>
+<div class="section" id="dependencies">
+<h1>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h1>
+<p>Astral has one external dependency on &#8216;pytz&#8217; which can either be obtained
+from <a class="reference external" href="http://pytz.sourceforge.net/">Sourceforge</a> page or via the <a class="reference external" href="http://peak.telecommunity.com/DevCenter/EasyInstall">easy_install</a> method, whichever is your
+particular poison.</p>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>When you&#8217;ve added the pytz package to install astral unzip the archive to
+a handy location and execute the standard Python installation method:</p>
+<div class="highlight-python"><pre>python setup.py install</pre>
+</div>
+</div>
+<div class="section" id="cities">
+<h1>Cities<a class="headerlink" href="#cities" title="Permalink to this headline">¶</a></h1>
+<p>The module includes location and time zone data for the following cities.
+The list includes all capital cities plus some from the UK. The list also
+includes the US state capitals and some other US cities.</p>
+<p>Aberdeen, Abu Dhabi, Abuja, Accra, Addis Ababa, Adelaide, Al Jubail, Algiers,
+Amman, Amsterdam, Andorra la Vella, Ankara, Antananarivo, Apia, Ashgabat,
+Asmara, Astana, Asuncion, Athens, Baghdad, Baku, Bamako, Bandar Seri Begawan,
+Bangkok, Bangui, Banjul, Basse-Terre, Basseterre, Beijing, Beirut, Belgrade,
+Belmopan, Berlin, Bern, Birmingham, Bishkek, Bissau, Bloemfontein, Bogota,
+Bolton, Bradford, Brasilia, Bratislava, Brazzaville, Bridgetown, Brisbane,
+Bristol, Brussels, Bucharest, Bucuresti, Budapest, Buenos Aires, Bujumbura,
+Cairo, Canberra, Cape Town, Caracas, Cardiff, Castries, Cayenne, Charlotte
+Amalie, Chisinau, Conakry, Copenhagen, Cotonou, Crawley, Dakar, Damascus, Dammam, Dhaka,
+Dili, Djibouti, Dodoma, Doha, Dublin, Dushanbe, Edinburgh, Fort-de-France,
+Freetown, Funafuti, Gaborone, George Town, Georgetown, Glasgow, Guatemala,
+Hanoi, Harare, Havana, Helsinki, Hobart, Honiara, Islamabad, Jakarta, Jerusalem, Jubail,
+Kabul, Kampala, Kathmandu, Khartoum, Kiev, Kigali, Kingston, Kingstown,
+Kinshasa, Koror, Kuala Lumpur, Kuwait, La Paz, Leeds, Leicester, Libreville,
+Lilongwe, Lima, Lisbon, Liverpool, Ljubljana, Lome, London, Luanda, Lusaka,
+Luxembourg, Macau, Madinah, Madrid, Makkah, Malabo, Male, Mamoudzou, Managua,
+Manama, Manchester, Manila, Maputo, Maseru, Masqat, Mbabane, Mecca, Medina,
+Mexico, Minsk, Mogadishu, Monrovia, Montevideo, Moroni, Moscow, Moskva,
+N&#8217;Djamena, Nairobi, Nassau, New Delhi, Newcastle, Newcastle Upon Time, Niamey,
+Nicosia, Norwich, Nouakchott, Noumea, Nuku&#8217;alofa, Nuuk, Oranjestad, Oslo,
+Ottawa, Ouagadougou, Oxford, P&#8217;yongyang, Pago Pago, Palikir, Panama, Papeete,
+Paramaribo, Paris, Perth, Phnom Penh, Plymouth, Port Moresby, Port-Vila,
+Port-au-Prince, Porto-Novo, Portsmouth, Prague, Praia, Pretoria, Quito, Reading,
+Reykjavik, Riga, Riyadh, Road Town, Rome, Roseau, Saint Pierre, Saipan, San
+Jose, San Juan, San Marino, San Salvador, Santiago, Santo Domingo, Sao Tome,
+Sarajevo, Seoul, Sheffield, Skopje, Sofia, Southampton, St. Peter Port, Stanley,
+Stockholm, Sucre, Suva, Swansea, Swindon, Sydney, T&#8217;bilisi, Tallinn, Tarawa,
+Tashkent, Tegucigalpa, Tehran, Thimphu, Tirane, Torshavn, Tripoli, Tunis, Vaduz,
+Valletta, Vienna, Vientiane, Vilnius, W. Indies, Warsaw, Washington DC,
+Wellington, Willemstad, Windhoek, Wolverhampton, Yamoussoukro, Yangon, Yaounde,
+Yerevan, Zagreb</p>
+<div class="section" id="us-cities">
+<h2>US Cities<a class="headerlink" href="#us-cities" title="Permalink to this headline">¶</a></h2>
+<p>Albany, Albuquerque, Anchorage, Annapolis, Atlanta, Augusta, Austin, Baltimore,
+Baton Rouge, Billings, Birmingham, Bismarck, Boise, Boston, Bridgeport, Buffalo,
+Burlington, Carson City, Charleston, Charlotte, Cheyenne, Chicago, Cleveland,
+Columbia, Columbus, Concord, Dallas, Denver, Des Moines, Detroit, Dover, Fargo,
+Frankfort, Harrisburg, Hartford, Helena, Honolulu, Houston, Indianapolis,
+Jackson, Jacksonville, Jefferson City, Juneau, Kansas City, Lansing, Las Vegas,
+Lincoln, Little Rock, Los Angeles, Louisville, Madison, Manchester, Memphis,
+Miami, Milwaukee, Minneapolis, Montgomery, Montpelier, Nashville, New Orleans,
+New York, Newark, Oklahoma City, Olympia, Omaha, Orlando, Philadelphia, Phoenix,
+Pierre, Portland, Portland, Providence, Raleigh, Richmond, Sacramento, Saint
+Paul, Salem, Salt Lake City, San Diego, San Francisco, Santa Fe, Seattle, Sioux
+Falls, Springfield, Tallahassee, Toledo, Topeka, Trenton, Virginia Beach,
+Wichita, Wilmington</p>
+</div>
+</div>
+<div class="section" id="thanks">
+<h1>Thanks<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h1>
+<p>The sun calculations in this module were adapted, for Python, from the following
+spreadsheet.</p>
+<blockquote>
+<div><a class="reference external" href="http://www.ecy.wa.gov/programs/eap/models/twilight.zip">http://www.ecy.wa.gov/programs/eap/models/twilight.zip</a></div></blockquote>
+<p>Which takes its calculations from</p>
+<blockquote>
+<div><a class="reference external" href="http://www.srrb.noaa.gov/highlights/sunrise/azel.html">http://www.srrb.noaa.gov/highlights/sunrise/azel.html</a></div></blockquote>
+<p>The moon phase calculation is based on some <a class="reference external" href="http://www.skyandtelescope.com/observing/objects/javascript/moon_phases">javascript</a> code
+from Sky and Telescope magazine</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">Moon-phase calculation</div>
+<div class="line">Roger W. Sinnott, Sky &amp; Telescope, June 16, 2006.</div>
+</div>
+</div></blockquote>
+<p>Also to <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> for making doc generation an easy thing (not that the writing
+of the docs is any easier.)</p>
+</div>
+<div class="section" id="contact">
+<h1>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h1>
+<p>Simon Kennedy &lt;<a class="reference external" href="mailto:python&#37;&#52;&#48;sffjunkie&#46;co&#46;uk">python<span>&#64;</span>sffjunkie<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</p>
+</div>
+<div class="section" id="version-history">
+<h1>Version History<a class="headerlink" href="#version-history" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Version</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>0.5</td>
+<td><ul class="first last simple">
+<li>Changed <tt class="docutils literal"><span class="pre">City</span></tt> to accept unicode name and country.</li>
+<li>Moved city information into a database class <tt class="docutils literal"><span class="pre">CityDB</span></tt></li>
+<li>Added attribute access to database for timezone groups</li>
+</ul>
+</td>
+</tr>
+<tr><td>0.4</td>
+<td><ul class="first last simple">
+<li>Duplicate city names could not be accessed.</li>
+<li>Sun calculations for some cities failed with times
+outside valid ranges.</li>
+<li>Fixes for city data.</li>
+<li>Added calculation for moon phase.</li>
+</ul>
+</td>
+</tr>
+<tr><td>0.3</td>
+<td><ul class="first last simple">
+<li>Changed to <a class="reference external" href="http://www.opensource.org/licenses/apache2.0.php">Apache</a> V2.0 license.</li>
+<li>Fix for bug <a class="reference external" href="https://bugs.launchpad.net/astral/+bug/555508">555508</a> submitted by me.</li>
+<li>US state capitals and other cities added.</li>
+</ul>
+</td>
+</tr>
+<tr><td>0.2</td>
+<td>Fix for bug <a class="reference external" href="https://bugs.launchpad.net/astral/+bug/554041">554041</a> submitted by Derek_ / John Dimatos</td>
+</tr>
+<tr><td>0.1</td>
+<td>First release</td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/earth_sun.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Astral V0.5</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#cities">Cities</a><ul>
+<li><a class="reference internal" href="#us-cities">US Cities</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#thanks">Thanks</a></li>
+<li><a class="reference internal" href="#contact">Contact</a></li>
+<li><a class="reference internal" href="#version-history">Version History</a><ul>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="module.html"
+                        title="next chapter">The <tt class="docutils literal"><span class="pre">astral</span></tt> Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="module.html" title="The astral Module"
+             >next</a> |</li>
+        <li><a href="#">Astral v0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2011, Simon Kennedy.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
